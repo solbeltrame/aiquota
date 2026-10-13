@@ -12,10 +12,49 @@ struct SettingsView: View {
             AppearanceSettingsView().tabItem { Label(L("Appearance"), systemImage: "paintbrush") }.tag(SettingsTab.appearance)
             ProvidersSettings().tabItem { Label(L("Providers"), systemImage: "point.3.connected.trianglepath.dotted") }.tag(SettingsTab.providers)
             NotificationSettings().tabItem { Label(L("Notifications"), systemImage: "bell") }.tag(SettingsTab.notifications)
+            UpdatesSettings().tabItem { Label(L("Updates"), systemImage: "arrow.triangle.2.circlepath") }.tag(SettingsTab.updates)
             AboutView().tabItem { Label(L("About"), systemImage: "info.circle") }.tag(SettingsTab.about)
         }
         .frame(width: 560, height: 520)
         .id(model.settings.language)  // re-render strings after a language change
+    }
+}
+
+// MARK: - Updates
+
+private struct UpdatesSettings: View {
+    @EnvironmentObject var updates: UpdateManager
+
+    var body: some View {
+        Form {
+            Section(L("Current version")) {
+                LabeledContent(L("Installed version"), value: AIquotaVersion.current)
+                Label(updates.stateDescription, systemImage: updates.stateSymbol)
+                    .foregroundStyle(updates.state == .upToDate ? Color.green : Color.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+                Button(action: updates.checkForUpdates) {
+                    Label(L("Check for updates"), systemImage: "arrow.clockwise")
+                }
+                .disabled(!updates.canCheckForUpdates)
+                Link(L("View releases on GitHub"), destination: AppLinks.releases)
+            }
+            Section(L("Automatic updates")) {
+                Toggle(L("Check for updates automatically"), isOn: Binding(
+                    get: { updates.automaticallyChecksForUpdates },
+                    set: updates.setAutomaticChecks))
+                Toggle(L("Download and install updates automatically"), isOn: Binding(
+                    get: { updates.automaticallyDownloadsUpdates },
+                    set: updates.setAutomaticDownloads))
+                    .disabled(!updates.automaticallyChecksForUpdates)
+                Text(L("Automatic checks run about once a day. Downloads and installs can wait until AIquota is closed."))
+                    .font(.caption).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
+            }
+            Section {
+                Text(L("Updates are downloaded from the official GitHub releases and verified before installation."))
+                    .font(.caption).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
+            }
+        }
+        .formStyle(.grouped)
     }
 }
 

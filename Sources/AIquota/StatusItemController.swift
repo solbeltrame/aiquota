@@ -40,9 +40,12 @@ final class StatusItemController: NSObject {
 
     func update(now: Date = Date()) {
         guard let status = model.store.statuses[providerID] else { return }
-        let enabled = model.settings.providerSettings(providerID).enabled
+        let enabled = model.settings.providerSettings(providerID).enabled && model.isProviderAppRunning(providerID)
         if statusItem.isVisible != enabled { statusItem.isVisible = enabled }
-        guard enabled, let button = statusItem.button else { return }
+        guard enabled, let button = statusItem.button else {
+            closePopover()
+            return
+        }
 
         indicator.settings = model.settings.appearance
         indicator.mark = model.settings.appearance.showProviderIcon ? ProviderIcons.icon(for: providerID) : nil

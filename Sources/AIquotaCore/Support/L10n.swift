@@ -57,6 +57,7 @@ public enum L10n {
         "Allow…": "Permitir…",
         "Also color the numbers": "Colorir também os números",
         "Appearance": "Aparência",
+        "Automatic updates": "Atualizações automáticas",
         "Apply": "Aplicar",
         "Approve AIquota in System Settings → General → Login Items.": "Aprove o AIquota em Ajustes do Sistema → Geral → Itens de Início.",
         "Available %": "% disponível",
@@ -77,6 +78,11 @@ public enum L10n {
         "Colors": "Cores",
         "Connected": "Conectado",
         "Continue": "Continuar",
+        "Check for updates": "Buscar atualizações",
+        "Check for updates automatically": "Buscar atualizações automaticamente",
+        "Check for updates to see if you have the latest version.": "Busque atualizações para saber se você está na versão mais recente.",
+        "Checking for updates…": "Buscando atualizações…",
+        "Could not check for updates: %@": "Não foi possível buscar atualizações: %@",
         "Contributors": "Contribuidores",
         "Critical below %d%% available": "Crítico abaixo de %d%% disponível",
         "Critical": "Crítico",
@@ -85,6 +91,7 @@ public enum L10n {
         "Denied": "Negadas",
         "Detected automatically": "Detectado automaticamente",
         "Diagnostics": "Diagnóstico",
+        "Download and install updates automatically": "Baixar e instalar atualizações automaticamente",
         "Disabled": "Desativado",
         "Done": "Concluir",
         "Drag the Codex indicator next to the ChatGPT icon and the Claude indicator next to the Claude icon. macOS remembers the position when possible, but placement is controlled by macOS and cannot be guaranteed automatically.":
@@ -111,6 +118,7 @@ public enum L10n {
         "How to add a provider": "Como adicionar um provedor",
         "How to contribute": "Como contribuir",
         "Indicators": "Indicadores",
+        "Installed version": "Versão instalada",
         "Label size (5h / 7d)": "Tamanho dos rótulos (5h / 7d)",
         "Language": "Idioma",
         "Last data: %@ (%@)": "Últimos dados: %@ (%@)",
@@ -190,6 +198,14 @@ public enum L10n {
         "Status": "Estado",
         "Style": "Estilo",
         "System": "Sistema",
+        "A new version is available.": "Há uma nova versão disponível.",
+        "AIquota is up to date.": "O AIquota está atualizado.",
+        "Current version": "Versão atual",
+        "Automatic checks run about once a day. Downloads and installs can wait until AIquota is closed.":
+            "A busca automática acontece mais ou menos uma vez por dia. O download e a instalação podem esperar até o AIquota ser encerrado.",
+        "Updates are downloaded from the official GitHub releases and verified before installation.":
+            "As atualizações são baixadas das versões oficiais no GitHub e verificadas antes da instalação.",
+        "View releases on GitHub": "Ver versões no GitHub",
         "The Claude app saves your plan usage about every 5 minutes. AIquota reads only those percentages: no credentials, no network. This file format is undocumented and may change.":
             "O app Claude salva o uso do seu plano a cada 5 minutos, aproximadamente. O AIquota lê apenas esses percentuais: sem credenciais, sem rede. Este formato de arquivo não é documentado e pode mudar.",
         "Tip: Hold ⌘ Command and drag an AIquota indicator to place it next to your AI app.":

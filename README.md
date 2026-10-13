@@ -37,6 +37,8 @@ Choose either download from the [latest release](https://github.com/solbeltrame/
 
 On first launch, right-click the app and choose **Open**. AIquota is not notarized yet, so macOS asks you to confirm.
 
+Open **AIquota → Settings → Updates** to check your version or choose automatic updates. To move from the original 0.1.0 release to in-app updates, install this version once from the download above; 0.1.0 did not include an updater.
+
 Requires macOS 14 Sonoma or later, on Apple silicon or Intel. You can use the app as-is — no coding or setup account needed. If it helps you, starring the repo or sharing it is a lovely way to support the project 💛
 
 ## What it does
@@ -44,8 +46,10 @@ Requires macOS 14 Sonoma or later, on Apple silicon or Intel. You can use the ap
 - Shows your remaining 5-hour and weekly limits for Codex and Claude Code right in the menu bar.
 - Offers three compact styles: Minimal, Microbar, and Ring.
 - Supports available or used percentages, light and dark appearance, and optional alerts.
-- Privacy-first: no AIquota servers, analytics, or telemetry. AIquota reads local app data and asks Codex's App Server for usage limits.
+- Privacy-first: no AIquota servers, analytics, or telemetry. AIquota reads local app data and asks Codex's App Server for usage limits. Update checks contact GitHub Releases; no usage data is sent.
 - Uses no tokens to check your limits.
+- Keeps each indicator visible while its AI app is running, even after you close its window; quitting the AI app hides its indicator.
+- Includes signed in-app updates, with automatic checks enabled by default and automatic downloads/installation as an option.
 
 Hold ⌘ Command and drag an indicator to place it near its AI app. macOS controls menu bar placement, so automatic positioning is not available.
 
@@ -74,7 +78,7 @@ For a standalone app bundle, run `scripts/build-app.sh`. More details about the 
 
 ## Credits
 
-AIquota was created by **Sol Beltrame** and is open to contributions from everyone. Claude's local usage cache is decoded with [Zstandard](https://github.com/facebook/zstd) (BSD).
+AIquota was created by **Sol Beltrame** and is open to contributions from everyone. Claude's local usage cache is decoded with [Zstandard](https://github.com/facebook/zstd) (BSD), and in-app updates are powered by [Sparkle](https://sparkle-project.org/) (MIT).
 
 AIquota is not affiliated with, endorsed by, or sponsored by OpenAI or Anthropic. Codex, ChatGPT, Claude, and Claude Code are trademarks of their respective owners.
 

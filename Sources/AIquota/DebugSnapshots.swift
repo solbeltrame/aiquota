@@ -8,31 +8,33 @@ import SwiftUI
 ///     AIQUOTA_DEBUG_DUMP_DIR=/tmp/aiquota AIquota.app/Contents/MacOS/AIquota [--fixtures]
 @MainActor
 enum DebugSnapshots {
-    static func dumpViews(model: AppModel, to directory: URL) {
+    static func dumpViews(model: AppModel, updates: UpdateManager, to directory: URL) {
         for appearance in [NSAppearance.Name.aqua, .darkAqua] {
             let suffix = appearance == .darkAqua ? "dark" : "light"
             for provider in model.store.providers {
-                render(PopoverView(providerID: provider.id), model: model, appearance: appearance,
+                render(PopoverView(providerID: provider.id), model: model, updates: updates, appearance: appearance,
                        to: directory.appendingPathComponent("popover-\(provider.id.rawValue)-\(suffix).png"))
             }
             for tab in SettingsTab.allCases {
-                render(SettingsView(tab: .constant(tab)), model: model, appearance: appearance,
+                render(SettingsView(tab: .constant(tab)), model: model, updates: updates, appearance: appearance,
                        to: directory.appendingPathComponent("settings-\(tab.rawValue)-\(suffix).png"))
             }
             var withIcons = model.settings.appearance
             withIcons.showProviderIcon = true
             render(PreviewStrip(appearance: withIcons, thresholds: model.settings.thresholds).frame(width: 520).padding(8),
-                   model: model, appearance: appearance, to: directory.appendingPathComponent("preview-icons-\(suffix).png"))
-            render(OnboardingView(finish: {}), model: model, appearance: appearance,
+                   model: model, updates: updates, appearance: appearance, to: directory.appendingPathComponent("preview-icons-\(suffix).png"))
+            render(OnboardingView(finish: {}), model: model, updates: updates, appearance: appearance,
                    to: directory.appendingPathComponent("onboarding-\(suffix).png"))
         }
     }
 
-    private static func render<V: View>(_ view: V, model: AppModel, appearance: NSAppearance.Name, to url: URL) {
+    private static func render<V: View>(_ view: V, model: AppModel, updates: UpdateManager,
+                                        appearance: NSAppearance.Name, to url: URL) {
         let root = view
             .environmentObject(model)
             .environmentObject(model.store)
             .environmentObject(model.notifications)
+            .environmentObject(updates)
             .background(Color(nsColor: .windowBackgroundColor))
         let hosting = NSHostingView(rootView: root)
         hosting.appearance = NSAppearance(named: appearance)

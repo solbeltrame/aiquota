@@ -1,6 +1,7 @@
 import AppKit
 import AIquotaCore
 import Combine
+import Sparkle
 import SwiftUI
 
 @MainActor
@@ -8,13 +9,21 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var model: AppModel!
     private var controllers: [StatusItemController] = []
     private var cancellables: Set<AnyCancellable> = []
+    private var workspaceObservers: [NSObjectProtocol] = []
     private var tickTimer: Timer?
     private var settingsWindow: NSWindow?
     private var onboardingWindow: NSWindow?
     private let settingsTab = SettingsTabState()
+    private let updateManager = UpdateManager()
+    private var updaterController: SPUStandardUpdaterController!
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         model = AppModel()
+        updaterController = SPUStandardUpdaterController(startingUpdater: false,
+                                                        updaterDelegate: updateManager,
+                                                        userDriverDelegate: nil)
+        updateManager.attach(updaterController.updater)
+        updaterController.startUpdater()
         model.openSettings = { [weak self] tab in self?.showSettings(tab) }
         model.openOnboarding = { [weak self] in self?.showOnboarding() }
 
@@ -27,22 +36,39 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             .sink { [weak self] _, _ in self?.renderAll() }
             .store(in: &cancellables)
 
+        // Process launch/termination, rather than window visibility, controls the paired indicators.
+        let workspaceCenter = NSWorkspace.shared.notificationCenter
+        for name in [NSWorkspace.didLaunchApplicationNotification, NSWorkspace.didTerminateApplicationNotification] {
+            let observer = workspaceCenter.addObserver(forName: name, object: nil, queue: .main) { [weak self] _ in
+                MainActor.assumeIsolated {
+                    self?.model.refreshRunningProviderApps()
+                    self?.renderAll()
+                }
+            }
+            workspaceObservers.append(observer)
+        }
+
         // Freshness and window roll-over are evaluated locally; this costs no I/O.
         tickTimer = Timer.scheduledTimer(withTimeInterval: 30, repeats: true) { [weak self] _ in
-            MainActor.assumeIsolated { self?.renderAll() }
+            MainActor.assumeIsolated {
+                self?.model.refreshRunningProviderApps()
+                self?.renderAll()
+            }
         }
         tickTimer?.tolerance = 10
 
-        NSWorkspace.shared.notificationCenter.addObserver(forName: NSWorkspace.didWakeNotification, object: nil,
-                                                          queue: .main) { [weak self] _ in
+        let wakeObserver = NSWorkspace.shared.notificationCenter.addObserver(forName: NSWorkspace.didWakeNotification, object: nil,
+                                                                             queue: .main) { [weak self] _ in
             MainActor.assumeIsolated { self?.model.store.refreshAll(reason: .wake) }
         }
+        workspaceObservers.append(wakeObserver)
 
         if Self.fixturesRequested {
             model.store.showFixtures(Self.fixtureStatuses())
         } else {
             model.store.start()
         }
+        model.refreshRunningProviderApps()
         renderAll()
 
         if !model.settings.onboardingCompleted && !Self.fixturesRequested {
@@ -57,7 +83,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                     guard let self else { return }
                     self.controllers.forEach { $0.dumpIndicator(to: directory) }
                     if ProcessInfo.processInfo.environment["AIQUOTA_DEBUG_DUMP_VIEWS"] == "1" {
-                        DebugSnapshots.dumpViews(model: self.model, to: directory)
+                        DebugSnapshots.dumpViews(model: self.model, updates: self.updateManager, to: directory)
                     }
                 }
             }
@@ -66,6 +92,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationWillTerminate(_ notification: Notification) {
         model.store.stop()
+        workspaceObservers.forEach { NSWorkspace.shared.notificationCenter.removeObserver($0) }
+        workspaceObservers.removeAll()
     }
 
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
@@ -88,6 +116,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 .environmentObject(model)
                 .environmentObject(model.store)
                 .environmentObject(model.notifications)
+                .environmentObject(updateManager)
             let window = NSWindow(contentViewController: NSHostingController(rootView: root))
             window.title = L("AIquota Settings")
             window.styleMask = [.titled, .closable, .miniaturizable]

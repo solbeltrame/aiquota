@@ -14,17 +14,28 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - name: Require the Sparkle signing secret
+        env:
+          SPARKLE_PRIVATE_KEY: ${{ secrets.SPARKLE_PRIVATE_KEY }}
+        run: |
+          if [ -z "$SPARKLE_PRIVATE_KEY" ]; then
+            echo "::error::Set the SPARKLE_PRIVATE_KEY repository secret before publishing a tagged release."
+            exit 1
+          fi
       - name: Test
         run: swift test
-      # Ad-hoc signed. To sign and notarize, import a Developer ID certificate here and set SIGN_IDENTITY,
-      # then run notarytool/stapler (see docs/DISTRIBUTION.md).
+      # Ad-hoc code signing; Sparkle's update archive is independently signed with EdDSA below.
       - name: Build universal app
         run: scripts/build-app.sh
       - name: Checksum
         run: cd dist && shasum -a 256 AIquota-*.zip AIquota-*.dmg > SHA256SUMS.txt && cat SHA256SUMS.txt
-      - name: Draft GitHub release
+      - name: Create signed update feed
+        env:
+          SPARKLE_PRIVATE_KEY: ${{ secrets.SPARKLE_PRIVATE_KEY }}
+        run: scripts/create-appcast.sh "${GITHUB_REF_NAME#v}" "dist/AIquota-${GITHUB_REF_NAME#v}.zip"
+      - name: Publish GitHub release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "$GITHUB_REF_NAME" dist/AIquota-*.zip dist/AIquota-*.dmg dist/SHA256SUMS.txt \
-            --draft --title "AIquota ${GITHUB_REF_NAME#v}" --notes-file CHANGELOG.md
+          gh release create "$GITHUB_REF_NAME" dist/AIquota-*.zip dist/AIquota-*.dmg dist/SHA256SUMS.txt dist/appcast.xml \
+            --title "AIquota ${GITHUB_REF_NAME#v}" --notes-file CHANGELOG.md

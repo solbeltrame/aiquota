@@ -5,6 +5,7 @@ import Combine
 /// Shared app state for AppKit controllers and SwiftUI views.
 @MainActor
 final class AppModel: ObservableObject {
+    @Published private(set) var runningProviderApps: Set<ProviderID> = []
     @Published var settings: AppSettings {
         didSet {
             guard settings != oldValue else { return }
@@ -49,10 +50,31 @@ final class AppModel: ObservableObject {
         settings = copy
     }
 
+    /// Checks the foreground application processes, not their window state. Closing a window
+    /// therefore leaves its menu bar indicator visible; quitting the app hides it.
+    func refreshRunningProviderApps() {
+        let runningBundleIDs = Set(NSWorkspace.shared.runningApplications.compactMap(\.bundleIdentifier))
+        runningProviderApps = Set(ProviderApp.bundleIDs.compactMap { entry in
+            let (provider, bundleIDs) = entry
+            return bundleIDs.contains(where: runningBundleIDs.contains) ? provider : nil
+        })
+    }
+
+    func isProviderAppRunning(_ provider: ProviderID) -> Bool {
+        runningProviderApps.contains(provider)
+    }
+
     func cells(for status: ProviderStatus, now: Date = Date()) -> [IndicatorCell] {
         IndicatorModelBuilder.cells(for: status, windows: settings.windows(for: status.provider),
                                     mode: settings.valueMode, thresholds: settings.thresholds, now: now)
     }
+}
+
+private enum ProviderApp {
+    static let bundleIDs: [ProviderID: Set<String>] = [
+        .codex: ["com.openai.codex", "com.openai.chat"],
+        .claude: ["com.anthropic.claudefordesktop"],
+    ]
 }
 
 /// Thread-safe settings holder read by providers off the main actor.
@@ -67,6 +89,6 @@ final class SettingsBox: @unchecked Sendable {
 }
 
 enum SettingsTab: String, CaseIterable, Identifiable {
-    case general, appearance, providers, notifications, about
+    case general, appearance, providers, notifications, updates, about
     var id: String { rawValue }
 }

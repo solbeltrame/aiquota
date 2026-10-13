@@ -24,21 +24,28 @@ BIN_DIR=$(swift build -c release $ARCH_FLAGS --show-bin-path)
 
 rm -rf "$APP"
 mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
+mkdir -p "$APP/Contents/Frameworks"
 cp "$BIN_DIR/AIquota" "$APP/Contents/MacOS/AIquota"
 sed -e "s/__VERSION__/$VERSION/" -e "s/__BUILD__/$BUILD/" Resources/Info.plist > "$APP/Contents/Info.plist"
+SPARKLE_FRAMEWORK=$(find .build/artifacts -path '*/Sparkle.framework' -type d -print -quit)
+if [ -z "$SPARKLE_FRAMEWORK" ]; then
+  echo "Sparkle.framework was not found in the SwiftPM artifacts." >&2
+  exit 1
+fi
+cp -R "$SPARKLE_FRAMEWORK" "$APP/Contents/Frameworks/Sparkle.framework"
 if [ -f Resources/AppIcon.icns ]; then cp Resources/AppIcon.icns "$APP/Contents/Resources/AppIcon.icns"; fi
 
 IDENTITY=${SIGN_IDENTITY:--}
 if [ "$IDENTITY" = "-" ]; then
-  codesign --force --sign - "$APP"
+  codesign --force --deep --sign - "$APP"
 else
-  codesign --force --options runtime --timestamp --sign "$IDENTITY" "$APP"
+  codesign --force --deep --options runtime --timestamp --sign "$IDENTITY" "$APP"
 fi
-codesign --verify --strict "$APP"
+codesign --verify --deep --strict "$APP"
 
 ZIP="dist/AIquota-$VERSION.zip"
 rm -f "$ZIP"
-ditto -c -k --keepParent "$APP" "$ZIP"
+ditto -c -k --sequesterRsrc --keepParent "$APP" "$ZIP"
 
 DMG="dist/AIquota-$VERSION.dmg"
 DMG_STAGE=$(mktemp -d)

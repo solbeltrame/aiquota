@@ -86,5 +86,5 @@ dictionary. To add a language, add a case to `AppLanguage`, a dictionary and a p
 ## Releases (maintainers)
 
 1. Bump `AIquotaVersion.current` and `CHANGELOG.md`.
-2. Tag `vX.Y.Z` and push. The release workflow builds the universal app, creates ZIP and DMG downloads and drafts a GitHub release.
+2. Tag `vX.Y.Z` and push. The release workflow builds the universal app, creates ZIP and DMG downloads, signs the Sparkle appcast, and publishes a GitHub release. It needs the `SPARKLE_PRIVATE_KEY` repository secret.
 3. Sign and notarize if a Developer ID is configured (see [docs/DISTRIBUTION.md](docs/DISTRIBUTION.md)).

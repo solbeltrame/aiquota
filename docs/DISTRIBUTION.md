@@ -8,6 +8,8 @@
 - `dist/AIquota-<version>.dmg` — a disk image with the app and an `/Applications` shortcut for drag-and-drop installation.
 - `dist/AIquota-<version>.zip` — made with `ditto`, ready for a GitHub release or manual extraction.
 
+The app embeds Sparkle and checks the appcast hosted as an asset on the latest GitHub release. The feed points to the signed ZIP; the DMG remains the easiest first install. Versions before 0.2.0 need one manual install from the DMG or ZIP because they do not contain Sparkle.
+
 ## Signing today: ad-hoc
 
 Without an Apple Developer ID certificate the app is **ad-hoc signed** (`codesign --sign -`). This means:
@@ -36,6 +38,6 @@ means it cannot be distributed through the Mac App Store.
 
 ## Release workflow
 
-Pushing a `v*` tag runs `.github/workflows/release.yml`, which builds, ad-hoc signs, creates a ZIP and DMG,
-and drafts a GitHub release with both downloads and their SHA-256 checksums. Signing/notarization secrets can be added later
-(`MACOS_CERTIFICATE`, `MACOS_CERTIFICATE_PASSWORD`, `NOTARY_*`); the workflow notes where.
+Pushing a `v*` tag runs `.github/workflows/release.yml`, which builds and signs the appcast update archive with Sparkle EdDSA, then publishes the ZIP, DMG, checksum file and `appcast.xml` to GitHub Releases. To sign in GitHub Actions, maintainers must add the matching EdDSA private key as the repository's `SPARKLE_PRIVATE_KEY` Actions secret; never commit it. Local maintainers can instead sign with the `aiquota` entry in their macOS login Keychain by running `scripts/create-appcast.sh` after the app bundle is built. The public key is embedded in `Resources/Info.plist`.
+
+The app currently uses ad-hoc code signing because no Developer ID certificate is configured. Sparkle still verifies each update archive with the EdDSA key. A Developer ID certificate and notarization are recommended for a smoother first launch and stronger macOS signing continuity; these require the maintainer's Apple Developer credentials.

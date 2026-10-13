@@ -35,5 +35,17 @@
 	<true/>
 	<key>NSHumanReadableCopyright</key>
 	<string>MIT License. Not affiliated with OpenAI or Anthropic.</string>
+	<key>SUFeedURL</key>
+	<string>https://github.com/solbeltrame/aiquota/releases/latest/download/appcast.xml</string>
+	<key>SUPublicEDKey</key>
+	<string>kePUlTpyrBe7plq+0Fe8sqIzoQfwpaRUYhxqCttQVyE=</string>
+	<key>SUEnableAutomaticChecks</key>
+	<true/>
+	<key>SUAutomaticallyUpdate</key>
+	<false/>
+	<key>SUAllowsAutomaticUpdates</key>
+	<true/>
+	<key>SUVerifyUpdateBeforeExtraction</key>
+	<true/>
 </dict>
 </plist>

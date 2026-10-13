@@ -37,6 +37,8 @@ Escolha um dos formatos na [versão mais recente](https://github.com/solbeltrame
 
 Na primeira abertura, clique com o botão direito no app e escolha **Abrir**. O AIquota ainda não é notarizado, então o macOS pede essa confirmação.
 
+Em **AIquota → Configurações → Atualizações**, dá para conferir a versão e escolher como receber atualizações. Para sair da versão original 0.1.0 e ativar as atualizações dentro do app, instale esta versão uma vez pelo download acima; a 0.1.0 ainda não tinha atualizador.
+
 Requer macOS 14 Sonoma ou posterior, em Macs Apple silicon ou Intel. Pode usar do jeito que está — não precisa programar nem criar conta. Se curtir, dar uma estrela no repo ou compartilhar com alguém já ajuda demais 💛
 
 ## O que ele faz
@@ -44,8 +46,10 @@ Requer macOS 14 Sonoma ou posterior, em Macs Apple silicon ou Intel. Pode usar d
 - Mostra os limites de 5 horas e semanais do Codex e do Claude Code na barra de menus.
 - Tem três estilos compactos: Mínimo, Microbarra e Anel.
 - Permite exibir percentual disponível ou consumido, usar aparência clara/escura e receber alertas opcionais.
-- Privacidade em primeiro lugar: sem servidores do AIquota, analytics ou telemetria. O app lê dados locais e consulta os limites pelo App Server do Codex.
+- Privacidade em primeiro lugar: sem servidores do AIquota, analytics ou telemetria. O app lê dados locais e consulta os limites pelo App Server do Codex. A busca de atualizações acessa as releases do GitHub; nenhum dado de uso é enviado.
 - Não gasta tokens para consultar seus limites.
+- Mantém cada indicador enquanto o app de IA estiver rodando, mesmo se você fechar a janela; ao encerrar o app de IA, o indicador some.
+- Tem atualizações internas assinadas: a busca automática já vem ativada e o download/instalação automáticos são opcionais.
 
 Segure ⌘ Command e arraste um indicador para perto do app de IA. O macOS controla o posicionamento na barra, então não dá para posicioná-lo automaticamente.
 
@@ -74,7 +78,7 @@ Para gerar o app independente, rode `scripts/build-app.sh`. Mais detalhes sobre 
 
 ## Créditos
 
-O AIquota foi criado por **Sol Beltrame** e está aberto à colaboração de todo mundo. O cache local de uso do Claude é decodificado com [Zstandard](https://github.com/facebook/zstd) (BSD).
+O AIquota foi criado por **Sol Beltrame** e está aberto à colaboração de todo mundo. O cache local de uso do Claude é decodificado com [Zstandard](https://github.com/facebook/zstd) (BSD), e as atualizações internas usam o [Sparkle](https://sparkle-project.org/) (MIT).
 
 O AIquota não tem vínculo, endosso ou patrocínio da OpenAI ou da Anthropic. Codex, ChatGPT, Claude e Claude Code são marcas de seus respectivos donos.
 

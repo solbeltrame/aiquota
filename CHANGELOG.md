@@ -5,7 +5,11 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-10-13
+
 ### Added
+- Menu bar indicators follow whether the matching Codex/ChatGPT or Claude app is running. Closing a window keeps the indicator; quitting the app hides it.
+- Updates settings with installed-version status, a manual check, automatic update checks and optional automatic download/installation, powered by signed Sparkle updates.
 - Optional icon of each AI app before its numbers (Appearance), taken from the app installed on the Mac.
 
 ### Changed

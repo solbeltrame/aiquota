@@ -121,6 +121,7 @@ enum Formatters {
 enum AppLinks {
     // Update when the public repository is created.
     static let repository = URL(string: "https://github.com/solbeltrame/aiquota")!
+    static var releases: URL { repository.appendingPathComponent("releases") }
     static var contributing: URL { repository.appendingPathComponent("blob/main/CONTRIBUTING.md") }
     static var contributors: URL { repository.appendingPathComponent("graphs/contributors") }
     static var license: URL { repository.appendingPathComponent("blob/main/LICENSE") }
