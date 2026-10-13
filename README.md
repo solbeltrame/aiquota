@@ -30,9 +30,12 @@ AIquota is a small, free, open-source macOS app that keeps your Codex and Claude
 
 ## Download and use
 
-1. [Download the latest release](https://github.com/solbeltrame/aiquota/releases/latest) and unzip it.
-2. Move `AIquota.app` to your Applications folder.
-3. On first launch, right-click the app and choose **Open**. AIquota is not notarized yet, so macOS asks you to confirm.
+Choose either download from the [latest release](https://github.com/solbeltrame/aiquota/releases/latest):
+
+- **DMG (easy install):** open it and drag `AIquota.app` onto the **Applications** shortcut.
+- **ZIP:** unzip it and move `AIquota.app` to your Applications folder.
+
+On first launch, right-click the app and choose **Open**. AIquota is not notarized yet, so macOS asks you to confirm.
 
 Requires macOS 14 Sonoma or later, on Apple silicon or Intel. You can use the app as-is — no coding or setup account needed. If it helps you, starring the repo or sharing it is a lovely way to support the project 💛
 

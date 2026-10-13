@@ -21,6 +21,7 @@ All notable changes to this project are documented here. The format follows
 ## [0.1.0] - 2026-10-13
 
 ### Added
+- DMG download with an Applications shortcut, alongside the ZIP release asset.
 - Independent, always-visible menu bar indicators for OpenAI Codex and Anthropic Claude Code, with stable
   autosave names so ⌘-drag positions are remembered.
 - Three ultra-compact styles — Minimal, Microbar (default) and Ring — drawn with AppKit/Core Graphics,

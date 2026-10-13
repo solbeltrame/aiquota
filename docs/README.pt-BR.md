@@ -30,9 +30,12 @@ O AIquota é um app gratuito e open source para macOS que deixa os limites de us
 
 ## Baixe e use
 
-1. [Baixe a versão mais recente](https://github.com/solbeltrame/aiquota/releases/latest) e descompacte.
-2. Mova o `AIquota.app` para a pasta Aplicativos.
-3. Na primeira abertura, clique com o botão direito no app e escolha **Abrir**. O AIquota ainda não é notarizado, então o macOS pede essa confirmação.
+Escolha um dos formatos na [versão mais recente](https://github.com/solbeltrame/aiquota/releases/latest):
+
+- **DMG (instalação fácil):** abra o arquivo e arraste o `AIquota.app` para o atalho **Applications**.
+- **ZIP:** descompacte e mova o `AIquota.app` para a pasta Aplicativos.
+
+Na primeira abertura, clique com o botão direito no app e escolha **Abrir**. O AIquota ainda não é notarizado, então o macOS pede essa confirmação.
 
 Requer macOS 14 Sonoma ou posterior, em Macs Apple silicon ou Intel. Pode usar do jeito que está — não precisa programar nem criar conta. Se curtir, dar uma estrela no repo ou compartilhar com alguém já ajuda demais 💛
 

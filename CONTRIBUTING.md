@@ -46,7 +46,7 @@ Sources/AIquotaCore   Foundation only: model, providers, refresh scheduler, aler
 Sources/AIquotaUI     AppKit drawing of the indicators (layout, palette, renderer, view)
 Sources/AIquota       The app: status items, popover, settings, onboarding, notifications
 Tests/                Swift Testing suites; fixtures contain no real account data
-scripts/build-app.sh  Builds, signs (ad-hoc by default) and zips dist/AIquota.app
+scripts/build-app.sh  Builds and signs (ad-hoc by default) the app, ZIP and DMG downloads
 ```
 
 See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for how data flows.
@@ -86,5 +86,5 @@ dictionary. To add a language, add a case to `AppLanguage`, a dictionary and a p
 ## Releases (maintainers)
 
 1. Bump `AIquotaVersion.current` and `CHANGELOG.md`.
-2. Tag `vX.Y.Z` and push. The release workflow builds the universal app, zips it and drafts a GitHub release.
+2. Tag `vX.Y.Z` and push. The release workflow builds the universal app, creates ZIP and DMG downloads and drafts a GitHub release.
 3. Sign and notarize if a Developer ID is configured (see [docs/DISTRIBUTION.md](docs/DISTRIBUTION.md)).

@@ -1,5 +1,5 @@
 #!/bin/sh
-# Builds dist/AIquota.app (universal, ad-hoc signed) and dist/AIquota-<version>.zip.
+# Builds dist/AIquota.app (universal, ad-hoc signed), plus versioned ZIP and DMG downloads.
 #
 #   scripts/build-app.sh            # release build
 #   SIGN_IDENTITY="Developer ID Application: …" scripts/build-app.sh   # sign with your certificate
@@ -39,4 +39,15 @@ codesign --verify --strict "$APP"
 ZIP="dist/AIquota-$VERSION.zip"
 rm -f "$ZIP"
 ditto -c -k --keepParent "$APP" "$ZIP"
-echo "Built $APP and $ZIP"
+
+DMG="dist/AIquota-$VERSION.dmg"
+DMG_STAGE=$(mktemp -d)
+trap 'rm -rf "$DMG_STAGE"' EXIT
+cp -R "$APP" "$DMG_STAGE/AIquota.app"
+ln -s /Applications "$DMG_STAGE/Applications"
+rm -f "$DMG"
+hdiutil create -quiet -volname "AIquota" -srcfolder "$DMG_STAGE" -ov -format UDZO "$DMG"
+rm -rf "$DMG_STAGE"
+trap - EXIT
+
+echo "Built $APP, $ZIP and $DMG"

@@ -5,7 +5,8 @@
 `scripts/build-app.sh` creates:
 
 - `dist/AIquota.app` — universal (arm64 + x86_64), `LSUIElement` (menu bar only), minimum macOS 14.0.
-- `dist/AIquota-<version>.zip` — made with `ditto`, ready for a GitHub release.
+- `dist/AIquota-<version>.dmg` — a disk image with the app and an `/Applications` shortcut for drag-and-drop installation.
+- `dist/AIquota-<version>.zip` — made with `ditto`, ready for a GitHub release or manual extraction.
 
 ## Signing today: ad-hoc
 
@@ -35,13 +36,6 @@ means it cannot be distributed through the Mac App Store.
 
 ## Release workflow
 
-Pushing a `v*` tag runs `.github/workflows/release.yml`, which builds, ad-hoc signs, zips and drafts a GitHub
-release with the zip and its SHA-256. Signing/notarization secrets can be added later
+Pushing a `v*` tag runs `.github/workflows/release.yml`, which builds, ad-hoc signs, creates a ZIP and DMG,
+and drafts a GitHub release with both downloads and their SHA-256 checksums. Signing/notarization secrets can be added later
 (`MACOS_CERTIFICATE`, `MACOS_CERTIFICATE_PASSWORD`, `NOTARY_*`); the workflow notes where.
-
-## Before publishing the repository
-
-- [ ] `git grep` for personal paths, e-mails, account IDs and tokens (fixtures use placeholders only).
-- [ ] Update the repository URL in `Sources/AIquota/Services/SystemServices.swift` (`AppLinks`) and the README.
-- [ ] Create the labels (`good first issue`, `help wanted`, `provider`, …) — see `.github/labels.yml`.
-- [ ] Replace sample screenshots with real ones if desired (never include personal usage you don't want public).
