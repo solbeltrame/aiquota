@@ -1,0 +1,38 @@
+name: Bug report
+description: Something doesn't look or work right
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting! Please **don't paste tokens, account IDs or private file contents**.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What you expected and what you saw instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+  - type: dropdown
+    id: provider
+    attributes:
+      label: Provider
+      options: [Codex, Claude Code, Both, Not provider-specific]
+  - type: input
+    id: versions
+    attributes:
+      label: Versions
+      placeholder: "AIquota 0.1.0 · macOS 15.4 · Apple M1 · codex-cli 0.162 · Claude Code 2.1"
+    validations:
+      required: true
+  - type: textarea
+    id: diagnostics
+    attributes:
+      label: Diagnostics
+      description: |
+        Settings → Providers → Diagnostics, and if it is visual, PNGs from
+        `AIQUOTA_DEBUG_DUMP_DIR=/tmp/aiquota /Applications/AIquota.app/Contents/MacOS/AIquota`.

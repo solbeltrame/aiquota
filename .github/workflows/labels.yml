@@ -1,0 +1,32 @@
+name: Sync labels
+
+on:
+  workflow_dispatch:
+
+permissions:
+  issues: write
+
+jobs:
+  labels:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Create or update labels
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 - <<'PY'
+          import subprocess
+          labels, current = [], None
+          for line in open(".github/labels.yml"):
+              line = line.rstrip()
+              if line.startswith("- name:"):
+                  current = {"name": line.split(":", 1)[1].strip()}
+                  labels.append(current)
+              elif current and ":" in line and not line.lstrip().startswith("#"):
+                  key, value = line.strip().split(":", 1)
+                  current[key] = value.strip()
+          for label in labels:
+              subprocess.run(["gh", "label", "create", label["name"], "--color", label.get("color", "ededed"),
+                              "--description", label.get("description", ""), "--force"], check=True)
+          PY

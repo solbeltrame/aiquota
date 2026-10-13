@@ -1,0 +1,5 @@
+{"partial line cut by tail read
+{"timestamp": "2026-10-13T03:10:00.000Z", "type": "event_msg", "payload": {"type": "agent_message", "message": "hi"}}
+{"timestamp": "2026-10-13T03:12:00.000Z", "type": "event_msg", "payload": {"type": "token_count", "info": null, "rate_limits": {"limit_id": "codex", "primary": {"used_percent": 55.0, "window_minutes": 300, "resets_at": 1791872691}, "secondary": {"used_percent": 88.0, "window_minutes": 10080, "resets_at": 1792297736}, "plan_type": "plus"}}}
+{"timestamp": "2026-10-13T03:13:46.381Z", "type": "event_msg", "payload": {"type": "token_count", "info": null, "rate_limits": {"limit_id": "codex", "primary": {"used_percent": 61.0, "window_minutes": 300, "resets_at": 1791872691}, "secondary": {"used_percent": 90.0, "window_minutes": 10080, "resets_at": 1792297736}, "plan_type": "plus"}}}
+{"timestamp": "2026-10-13T03:14:00.000Z", "type": "response_item", "payload": {"type": "message", "content": "no limits here"}}

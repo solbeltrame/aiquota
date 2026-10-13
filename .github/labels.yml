@@ -1,0 +1,28 @@
+# Repository labels. Create them with the "Sync labels" workflow (Actions → Sync labels → Run workflow).
+- name: good first issue
+  color: 7057ff
+  description: Good for newcomers
+- name: help wanted
+  color: 008672
+  description: Extra attention is welcome
+- name: bug
+  color: d73a4a
+  description: Something isn't working
+- name: enhancement
+  color: a2eeef
+  description: New feature or request
+- name: provider
+  color: 0e8a16
+  description: New or existing provider integration
+- name: visual
+  color: f9d0c4
+  description: Menu bar, popover or settings appearance
+- name: performance
+  color: fbca04
+  description: CPU, memory or energy
+- name: translation
+  color: c5def5
+  description: Localization
+- name: documentation
+  color: 0075ca
+  description: Docs

@@ -1,0 +1,25 @@
+name: New provider
+description: Propose support for another AI tool (Gemini, Copilot, Cursor, …)
+labels: [provider, help wanted]
+body:
+  - type: input
+    id: tool
+    attributes:
+      label: Tool
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: Where can usage limits be read?
+      description: |
+        Official local interface, local files, or documented API? Link the docs.
+        Sources that need stored passwords, spending tokens or aggressive polling of private endpoints can't be accepted.
+    validations:
+      required: true
+  - type: checkboxes
+    id: help
+    attributes:
+      label: Contribution
+      options:
+        - label: I'd like to implement it (see docs/ADDING_A_PROVIDER.md)
