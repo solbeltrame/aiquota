@@ -104,6 +104,9 @@ private struct GeneralSettings: View {
                 }
             }
             Section(L("Indicators")) {
+                Toggle(L("Always show indicators"), isOn: binding(\.alwaysShowIndicators))
+                Text(L("When this is off, each indicator appears only while its AI app is open."))
+                    .font(.caption).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
                 Picker(L("Show"), selection: binding(\.valueMode)) {
                     Text(L("Available %")).tag(ValueMode.available)
                     Text(L("Used %")).tag(ValueMode.consumed)

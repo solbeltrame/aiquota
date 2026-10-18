@@ -48,7 +48,7 @@ Requires macOS 14 Sonoma or later, on Apple silicon or Intel. You can use the ap
 - Supports available or used percentages, light and dark appearance, and optional alerts.
 - Privacy-first: no AIquota servers, analytics, or telemetry. AIquota reads local app data and asks Codex's App Server for usage limits. Update checks contact GitHub Releases; no usage data is sent.
 - Uses no tokens to check your limits.
-- Keeps each indicator visible while its AI app is running, even after you close its window; quitting the AI app hides its indicator.
+- By default, each indicator appears only while its AI app is running; you can choose to keep all indicators visible in Settings.
 - Includes signed in-app updates, with automatic checks enabled by default and automatic downloads/installation as an option.
 
 Hold ⌘ Command and drag an indicator to place it near its AI app. macOS controls menu bar placement, so automatic positioning is not available.

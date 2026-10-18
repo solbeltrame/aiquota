@@ -51,7 +51,7 @@ final class AppModel: ObservableObject {
     }
 
     /// Checks the foreground application processes, not their window state. Closing a window
-    /// therefore leaves its menu bar indicator visible; quitting the app hides it.
+    /// leaves its menu bar indicator visible; quitting hides it by default, unless always-show is enabled.
     func refreshRunningProviderApps() {
         let runningBundleIDs = Set(NSWorkspace.shared.runningApplications.compactMap(\.bundleIdentifier))
         runningProviderApps = Set(ProviderApp.bundleIDs.compactMap { entry in

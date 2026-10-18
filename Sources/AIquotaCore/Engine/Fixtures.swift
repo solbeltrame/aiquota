@@ -1,7 +1,7 @@
 import Foundation
 
 public enum AIquotaVersion {
-    public static let current = "0.2.0"
+    public static let current = "0.3.0"
 }
 
 /// Development fixtures for previews, screenshots and visual tests.

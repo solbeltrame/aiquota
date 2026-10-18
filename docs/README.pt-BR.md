@@ -48,7 +48,7 @@ Requer macOS 14 Sonoma ou posterior, em Macs Apple silicon ou Intel. Pode usar d
 - Permite exibir percentual disponível ou consumido, usar aparência clara/escura e receber alertas opcionais.
 - Privacidade em primeiro lugar: sem servidores do AIquota, analytics ou telemetria. O app lê dados locais e consulta os limites pelo App Server do Codex. A busca de atualizações acessa as releases do GitHub; nenhum dado de uso é enviado.
 - Não gasta tokens para consultar seus limites.
-- Mantém cada indicador enquanto o app de IA estiver rodando, mesmo se você fechar a janela; ao encerrar o app de IA, o indicador some.
+- Por padrão, cada indicador aparece apenas enquanto o app de IA correspondente está aberto; nas Configurações, você pode deixá-los sempre visíveis.
 - Tem atualizações internas assinadas: a busca automática já vem ativada e o download/instalação automáticos são opcionais.
 
 Segure ⌘ Command e arraste um indicador para perto do app de IA. O macOS controla o posicionamento na barra, então não dá para posicioná-lo automaticamente.

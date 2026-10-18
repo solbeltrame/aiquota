@@ -80,6 +80,8 @@ public struct AppSettings: Codable, Equatable, Sendable {
     public var refreshInterval: Double = 60
     public var language: AppLanguage = .system
     public var alerts = AlertSettings()
+    /// Keep provider indicators visible even when their matching AI app is not running.
+    public var alwaysShowIndicators = false
     public var useClaudeDesktopHistory = true
     public var codexExecutablePath: String?
     public var onboardingCompleted = false
@@ -102,7 +104,7 @@ public struct AppSettings: Codable, Equatable, Sendable {
 
     enum CodingKeys: String, CodingKey {
         case appearance, valueMode, windows, thresholds, providers, refreshInterval, language, alerts,
-             useClaudeDesktopHistory, codexExecutablePath, onboardingCompleted
+             alwaysShowIndicators, useClaudeDesktopHistory, codexExecutablePath, onboardingCompleted
     }
 
     /// Every field falls back to its default, so new versions never wipe older preferences.
@@ -118,6 +120,7 @@ public struct AppSettings: Codable, Equatable, Sendable {
             .clamped(to: RefreshScheduler.userIntervalRange)
         language = (try? c.decode(AppLanguage.self, forKey: .language)) ?? d.language
         alerts = (try? c.decode(AlertSettings.self, forKey: .alerts)) ?? d.alerts
+        alwaysShowIndicators = (try? c.decode(Bool.self, forKey: .alwaysShowIndicators)) ?? d.alwaysShowIndicators
         useClaudeDesktopHistory = (try? c.decode(Bool.self, forKey: .useClaudeDesktopHistory)) ?? d.useClaudeDesktopHistory
         codexExecutablePath = try? c.decodeIfPresent(String.self, forKey: .codexExecutablePath)
         onboardingCompleted = (try? c.decode(Bool.self, forKey: .onboardingCompleted)) ?? d.onboardingCompleted

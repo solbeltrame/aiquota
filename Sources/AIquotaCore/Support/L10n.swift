@@ -57,6 +57,7 @@ public enum L10n {
         "Allow…": "Permitir…",
         "Also color the numbers": "Colorir também os números",
         "Appearance": "Aparência",
+        "Always show indicators": "Sempre mostrar os indicadores",
         "Automatic updates": "Atualizações automáticas",
         "Apply": "Aplicar",
         "Approve AIquota in System Settings → General → Login Items.": "Aprove o AIquota em Ajustes do Sistema → Geral → Itens de Início.",
@@ -188,6 +189,8 @@ public enum L10n {
         "Settings…": "Configurações…",
         "Show % sign": "Mostrar símbolo %",
         "Show each AI app's icon": "Mostrar o ícone de cada IA",
+        "When this is off, each indicator appears only while its AI app is open.":
+            "Desativada, cada indicador aparece apenas enquanto o app de IA correspondente estiver aberto.",
         "Useful when the AI app's own menu bar icon is hidden. Uses the icon of the app installed on your Mac.":
             "Útil quando o ícone original da IA não fica na barra de menus. Usa o ícone do app instalado no seu Mac.",
         "Show in menu bar": "Mostrar na barra de menus",

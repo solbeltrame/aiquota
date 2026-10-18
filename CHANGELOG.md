@@ -5,6 +5,11 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-10-18
+
+### Added
+- Setting to keep enabled menu bar indicators visible even when their matching AI apps are closed. By default, each indicator follows its app's running state.
+
 ## [0.2.0] - 2026-10-13
 
 ### Added
